@@ -1,0 +1,67 @@
+<apex:component allowDML="true" controller="PhotoUploadController"  >
+<!-- Generales del Form -->
+<!-- ATRIBUTOS GENERALES -->
+
+
+  <apex:attribute type="String" name="formId" default="formUpload" description="" />
+  <apex:attribute type="String" name="fieldName" default="" description="" assignTo="{!fieldNameObject}"/>
+  <apex:attribute type="SObject" name="record" description="" required="true" assignTo="{!recordObject}" />
+  <apex:attribute type="String" name="folderName" description="Name of the Folder where the Document will be saved" default="Rewards" assignTo="{!folderUniqueName}"  />
+  <apex:attribute type="String" name="sObjectName" default="" description="" />
+
+  <apex:attribute type="String" name="externalURLName" description="" default="" assignTo="{!externalURLNameObject}"/>
+
+
+    <article class="slds-card slds-m-around--medium">
+      <div class="slds-card__header slds-grid">
+          <div class="slds-media__body" style="display: flex">
+
+            <div class="fielosf-photo-upload" style="margin:auto" data-form-id="{!formId}" data-field-name="{!fieldName}" data-record="{!record}" data-folder-name="{!folderName}" data-sobject-name="{!sObjectName}" data-externalUrlName="{!externalURLName}" data-folder-id="{!folderId}" data-record-name="{!record['Name']}">
+
+              <div class="slds-button-group " style="display:table; margin:auto auto 20px auto"  role="group">
+
+                <button class="slds-button slds-button--neutral slds-button--upload {!IF(hasImage,'slds-hide', '')}">{!$Label.PhotoUpload}</button>
+                <button class="slds-button slds-button--neutral slds-button--url {!IF(hasImage, 'slds-hide', '')}">{!$Label.ExternalURL}</button>
+                <button class="slds-button slds-button--neutral slds-button--document slds-hide">{!$Label.ExistingDocument}</button>
+                <button class="slds-button slds-button--neutral slds-button--preview slds-hide">{!$Label.Preview}</button>
+                <button class="slds-button slds-button--neutral slds-button--cancel slds-hide">{!$Label.Cancel}</button>
+                <button class="slds-button slds-button--neutral slds-button--save slds-hide slds-button--brand">{!$Label.Save}</button>
+                
+                <button class="slds-button slds-button--neutral slds-button--replace {!IF(!hasImage, 'slds-hide', '')}">{!$Label.Replace}</button>
+
+                <apex:panelGroup rendered="{! !ISBLANK(record[fieldName]) && !ISNULL(encImage)}" >
+                  <button class="slds-button slds-button--neutral slds-button--edit {!IF(!ISBLANK(record[fieldName]), '', 'slds-hide')}">{!$Label.edit}</button>
+                </apex:panelGroup>
+
+                <button class="slds-button slds-button--neutral slds-button--delete {!IF(hasImage, '', 'slds-hide')} slds-button--brand">{!$Label.Delete}</button>
+
+              </div>
+
+              <div class="slds-form-element " >
+                <div class="slds-form-element__control ">
+                  <input type="file" accept="image/*" class="slds-hide slds-input fielosf-input-file" />
+
+                  <img style="max-width:100%; max-height:500px; margin:auto" class="fielosf-cropper" />
+
+                  <apex:panelGroup rendered="{! !ISNULL(record[externalURLName]) || !ISNULL(encImage)}" >
+                    <img style="max-width:100%; max-height:500px; margin:auto" class="fielosf-recordImg "  src="{!IF(ISBLANK(record[fieldName]),record[externalURLName], encImage)}" />
+                  </apex:panelGroup>
+
+                <apex:panelGroup rendered="{!ISBLANK(record[fieldName]) && !ISBLANK(record[externalURLName])}">
+                  <div style="text-align:center" class="fielosf-external-link slds-p-around--medium">{!$Label.ExternalURLPhotoUpload} {!record[externalURLName]}</div>
+                </apex:panelGroup>
+
+
+                  <input class="slds-input fielosf-external-url slds-hide" placeholder="{!$Label.ImageURL}" />
+
+                  <c:Picklist showLabel="false" formid="{!formId}" fieldName="existingDocument"  mode="new" picklistEntries="{!existingDocuments}" required="false" className="fielosf-document-picklist slds-hide" />
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </div>
+    </article>
+</apex:component>

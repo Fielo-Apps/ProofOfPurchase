@@ -1,0 +1,9 @@
+/*
+    CreateMembers
+*/
+List<FieloEE__Member__c> members = new List<FieloEE__Member__c>();
+for (Integer i = 0; i < 1000; i++) {
+    members.add( new FieloEE__Member__c(FieloEE__FirstName__c = 'First'+String.valueOf(i) , FieloEE__LastName__c = 'Last'+String.valueOf(i)) );
+}
+
+insert members;

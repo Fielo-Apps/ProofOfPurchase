@@ -1,0 +1,12 @@
+{
+    "orgName": "Fielo PRP",
+    "edition": "Developer",
+    "orgPreferences": {
+        "enabled": [
+            "S1DesktopEnabled",
+            "Translation"
+        ]
+    },
+    "language": "en_US",
+    "country": "US"
+}

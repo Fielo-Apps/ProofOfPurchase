@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HasDetails__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When checked, the Invoice was created with Invoice Items. This will be the case when Request Invoice Products is on in the Member&#39;s Program. Internal use only.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>When checked, the Invoice was created with Invoice Items.</inlineHelpText>
+    <label>Has Details</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

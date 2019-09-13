@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateMemberUpdate</fullName>
+    <active>true</active>
+    <description>You cannot change the Member associated with this Invoice.</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(  Member__c ), 
+NOT(ISBLANK(PRIORVALUE(Member__c ))), 
+PRIORVALUE(Member__c )!=Member__c 
+)</errorConditionFormula>
+    <errorMessage>You cannot change the Member associated with this Invoice.</errorMessage>
+</ValidationRule>

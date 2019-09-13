@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RejectReason__c</fullName>
+    <description>Remarks about why an Invoice was rejected.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>These are remarks about why the invoice was rejected.</inlineHelpText>
+    <label>Reject Reason</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Invalid Amount</fullName>
+                <default>false</default>
+                <label>Invalid Amount</label>
+            </value>
+            <value>
+                <fullName>Invalid Image</fullName>
+                <default>false</default>
+                <label>Invalid Image</label>
+            </value>
+            <value>
+                <fullName>No Image Attached</fullName>
+                <default>false</default>
+                <label>No Image Attached</label>
+            </value>
+            <value>
+                <fullName>Missing Products</fullName>
+                <default>false</default>
+                <label>Missing Products</label>
+            </value>
+            <value>
+                <fullName>Bad invoice quality</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bad invoice quality</label>
+            </value>
+            <value>
+                <fullName>Content doesn&#39;t fit with the image</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Content doesn&#39;t fit with the image</label>
+            </value>
+            <value>
+                <fullName>Wrong invoice image</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Wrong invoice image</label>
+            </value>
+            <value>
+                <fullName>Wrong price</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Wrong price</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

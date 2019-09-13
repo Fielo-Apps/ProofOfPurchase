@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateInvoiceNull</fullName>
+    <active>true</active>
+    <description>This Invoice Item must be associated with an Invoice.</description>
+    <errorConditionFormula>ISBLANK( Invoice__c )</errorConditionFormula>
+    <errorMessage>This Invoice Item must be associated with an Invoice.</errorMessage>
+</ValidationRule>

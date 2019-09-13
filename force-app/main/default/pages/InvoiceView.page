@@ -1,0 +1,216 @@
+<apex:page tabStyle="Invoice__c" sidebar="false" docType="html-5.0" standardController="Invoice__c" extensions="InvoiceViewController" >
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+  <link rel="stylesheet" href="{!URLFOR($Resource.FieloSalesforce_Backend, 'lightning/styles/salesforce-lightning-design-system-vf.min.css')}"></link>
+  <link rel="stylesheet" href="{!URLFOR($Resource.FieloSalesforce_Backend, 'fielo/styles/core.css')}"></link>
+  <link rel="stylesheet" href="{!URLFOR($Resource.FieloPLT__FieloPlt_Salesforce, 'styles/core.css')}"></link>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+  <div class="fielosf fielosf-redemption-view">
+    <c:BackendHeaderRecord firstHeading="{!$ObjectType.Invoice__c.labelPlural}"
+      secondHeading="{!record['name']}"
+      icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/standard-sprite/svg/symbols.svg#contract"
+      helpUrl="http://documentation.fielo.com/docs/redemption"
+      record="{!record}"
+      prefix="FieloPRP"
+      sObjectName="Invoice__c"
+      fieldset="{!viewSettings.FieloPLT__Fieldset__c}"
+      buttons="{!viewSettings.FieloPLT__Buttons__c}"
+      tools="{!viewSettings.FieloPLT__Tools__c}"
+    >
+      <span class="slds-icon_container {!hiddenClass}" title="{!$Label.LockedByApprovalProcess}">
+        <svg class="slds-button__icon slds-button__icon--large" aria-hidden="true">
+                  <use xlink:href="{!URLFOR($Resource.FieloSalesforce_Backend, '/lightning/icons/utility-sprite/svg/symbols.svg#lock')}"></use>
+        </svg>
+      </span>
+    </c:BackendHeaderRecord>
+
+    <apex:panelGroup rendered="{!editSettings.FieloPLT__Sections__c != null}">
+      <c:FormInvoice namespace="FieloPRP" formId="invoiceForm"
+        heading="{!$Label.edit} {!$ObjectType.Invoice__c.label}"
+        sObjectName="FieloPRP__Invoice__c"
+        fieldset="{!editSettings.FieloPLT__Sections__c}"
+        itemsSection="{!lookupSettings['itemsSection'].FieloPLT__Fieldset__c}"
+        productSection="{!lookupSettings['productSection'].FieloPLT__Fieldset__c}"
+        productRecentSection="{!lookupSettings['productRecentSection'].FieloPLT__Fieldset__c}"
+        mode="new"
+        record="{!record}"
+        className="fielosf-invoice-form"
+        retrieveController="FormInvoiceController.retrieve"
+      />
+    </apex:panelGroup>
+
+    <c:FormApproval formId="approvalForm"
+      heading="{!$Label.ApproveReject} {!$ObjectType.Invoice__c.label}"
+      sObjectName="FieloPRP__Invoice__c"
+      fieldset="{!editSettings.FieloPLT__Sections__c}"
+      mode="edit"
+      record="{!record}"
+      redirect="true"
+    />
+
+    <c:FormSubmitForApproval formId="approverForm"
+      heading="{!$Label.SelectApprover}"
+      sObjectName="FieloPRP__Invoice__c"
+      fieldset="{!editSettings.FieloPLT__Sections__c}"
+      mode="edit"
+      record="{!record}"
+      redirect="true"
+    />
+    
+    <apex:repeat value="{!relatedSettings}" var="rel">
+        <apex:panelGroup rendered="{!rel.FieloPLT__TargetObject__c = 'FieloPRP__InvoiceItem__c' && record.FieloPRP__HasDetails__c }">
+          <c:RelatedList namespace="FieloPRP" heading="{! $ObjectType[rel.FieloPLT__TargetObject__c].labelPlural}"
+            icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/standard-sprite/svg/symbols.svg#product"
+            sObjectName="{!rel.FieloPLT__TargetObject__c}"
+            dataFilters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            parameters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            fieldset="{!rel.FieloPLT__Fieldset__c}"
+            buttons="{!rel.FieloPLT__Buttons__c}"
+            tools="{!rel.FieloPLT__Tools__c}"
+            actions="{!rel.FieloPLT__Actions__c}"
+            />
+        </apex:panelGroup>
+
+        <apex:panelGroup rendered="{!rel.FieloPLT__TargetObject__c = 'FieloPLT__Transaction__c'}">
+          <c:RelatedList namespace="FieloPLT" heading="{! $ObjectType[rel.FieloPLT__TargetObject__c].labelPlural}"
+            icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/standard-sprite/svg/symbols.svg#process"
+            sObjectName="{!rel.FieloPLT__TargetObject__c}"
+            dataFilters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            parameters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            fieldset="{!rel.FieloPLT__Fieldset__c}"
+            buttons="{!rel.FieloPLT__Buttons__c}"
+            tools="{!rel.FieloPLT__Tools__c}"
+            actions="{!rel.FieloPLT__Actions__c}"
+            />
+        </apex:panelGroup>
+
+        <apex:panelGroup rendered="{!(rel.FieloPLT__TargetObject__c != 'FieloPLT__Transaction__c') && (rel.FieloPLT__TargetObject__c != 'FieloPRP__InvoiceItem__c')}">
+          <c:RelatedList namespace="FieloPLT" heading="{! $ObjectType[rel.FieloPLT__TargetObject__c].labelPlural}"
+            icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/standard-sprite/svg/symbols.svg#process"
+            sObjectName="{!rel.FieloPLT__TargetObject__c}"
+            dataFilters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            parameters="{'{!rel.FieloPLT__TargetField__c}':'{!Invoice__c.Id}'}"
+            fieldset="{!rel.FieloPLT__Fieldset__c}"
+            buttons="{!rel.FieloPLT__Buttons__c}"
+            tools="{!rel.FieloPLT__Tools__c}"
+            actions="{!rel.FieloPLT__Actions__c}"
+            />
+        </apex:panelGroup>
+    </apex:repeat>
+
+    <!-- STANDARD Salesforce Related List  -->
+      <apex:repeat value="{!relatedStandard}" var="relatedName">
+        <apex:panelGroup rendered="{!relatedName == 'ImageGallery'}">
+          <c:ImageGallery parentId="{!record.Id}" />
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'ObjectHistory'}">
+          <c:RelatedList namespace="FieloPLT" heading="{!$ObjectType[objectName].label} {!$Label.fieloplt__history}"
+            icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/standard-sprite/svg/symbols.svg#record"
+            sObjectName="FieloPLT__Promotion__History"
+            dataFilters="{'ParentId':'{!record.Id}'}"
+            parameters="{'ParentId':'{!record.Id}'}"
+            fieldset="{'Name':'OldValue'},{'Name':'NewValue'},{'Name':'CreatedBy.Name'},{'Name':'CreatedDate'}"
+            nameField="Field"
+            dataOrderBy="CreatedDate DESC"
+          />
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'ProcessSteps'}">
+          <c:ApprovalHistory namespace="FieloPRP" heading="{!$Label.fieloplt__approvalhistory}"
+            icon="{!URLFOR($Resource.FieloSalesforce_Backend)}/lightning/icons/action-sprite/svg/symbols.svg#submit_for_approval"
+            record="{!record}"/>
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'CombinedAttachments'}">
+          <c:RelatedWrapper heading="{!$Label.fieloplt__notesattachments}" icon="action-sprite/svg/symbols.svg#new_note">
+            <apex:relatedList list="CombinedAttachments" />
+          </c:RelatedWrapper>
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'ActivityHistories'}">
+          <c:RelatedWrapper heading="{!$Label.fieloplt__activityhistory}" icon="action-sprite/svg/symbols.svg#log_event">
+            <apex:relatedList list="ActivityHistories" />
+          </c:RelatedWrapper>
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'OpenActivities'}">
+          <c:RelatedWrapper heading="{!$Label.fieloplt__openactivities}" icon="action-sprite/svg/symbols.svg#new_event">
+            <apex:relatedList list="OpenActivities" />
+          </c:RelatedWrapper>
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'AttachedContentDocuments'}">
+          <c:RelatedWrapper heading="{!$Label.fieloplt__files}" icon="standard-sprite/svg/symbols.svg#file">
+            <apex:relatedList list="AttachedContentDocuments" />
+          </c:RelatedWrapper>
+        </apex:panelGroup>
+        <apex:panelGroup rendered="{!relatedName == 'RelatedContentDistributionList'}">
+          <c:RelatedWrapper heading="{!$Label.fieloplt__contentdeliveries}" icon="standard-sprite/svg/symbols.svg#share_file">
+            <apex:relatedList list="RelatedContentDistributionList" />
+          </c:RelatedWrapper>
+        </apex:panelGroup>
+      </apex:repeat>
+    
+
+    <div id="modalInvoiceImage" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal">
+      <div class="slds-modal__container">
+        <div class="slds-modal__header">
+          <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.Close}" onclick="closeModal();">
+            <svg class="slds-button__icon slds-button__icon--large" aria-hidden="true">
+                <use xlink:href="/resource/1489600766000/FieloPRP__FieloSalesforce_Backend/lightning/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">{!$Label.Close}</span>
+          </button>
+          <h2 id="header43" class="slds-text-heading--medium">Modal Header</h2>
+        </div>
+        <div id="imgContainer" class="slds-modal__content slds-p-around--medium">
+          
+        </div>
+        <!--<div class="slds-modal__footer">
+          <button class="slds-button slds-button--neutral">Cancel</button>
+          <button class="slds-button slds-button--brand">Save</button>
+        </div>-->
+      </div>
+    </div>
+    <div id="backDropItem" class=""></div>
+
+    <script>
+      function openImage(imgUrl,imgName){
+        //clean existing image
+        var imgContainer = document.getElementById('imgContainer');        
+        while(imgContainer.hasChildNodes()){
+          imgContainer.removeChild(imgContainer.firstChild);
+        }
+
+        //create image element
+        var imgElement = document.createElement('img');
+        imgElement.setAttribute('id', 'openedImg');
+        imgElement.setAttribute('src', imgUrl);
+        imgElement.setAttribute('class', 'slds-align--absolute-center');
+        imgElement.setAttribute('style', 'max-width:100%; max-height:100%; margin:auto; ');
+
+        imgContainer.appendChild(imgElement);
+
+        document.getElementById('modalInvoiceImage').className = 'slds-modal slds-modal--large slds-fade-in-open';
+        document.getElementById('backDropItem').className = 'slds-backdrop slds-backdrop--open';
+        document.getElementById('header43').innerHTML = imgName;        
+      }
+
+      function closeModal(){
+        document.getElementById('modalInvoiceImage').className = 'slds-modal';
+        document.getElementById('backDropItem').className = 'slds-backdrop';         
+      }
+
+      function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+      }
+    </script>
+
+  </div>
+  <c:BackendFooter helpers="'FieloForm','FieloPaginator','FieloRecentRecords','FieloFilter', 'FieloRelatedRecords', 'FieloFormInvoice', 'FieloFormInvoiceApproval', 'FieloSubmitForApproval', 'FieloFormInvoiceApprover'," externalJS="{!URLFOR($Resource.FieloPLT__FieloPlt_Salesforce, 'scripts/core.js')}, {!URLFOR($Resource.FieloPrp_Salesforce, 'scripts/core.js')}" namespace="FieloPRP" />
+</body>
+</html>
+</apex:page>

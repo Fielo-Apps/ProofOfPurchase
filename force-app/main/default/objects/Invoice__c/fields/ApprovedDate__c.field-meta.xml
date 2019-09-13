@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ApprovedDate__c</fullName>
+    <description>The date and time at which an Invoice was approved. This will be blank if the Invoice has been rejected or not yet approved. If Request Invoice Authorization is off in the Member&#39;s Program, this will be the submission date of the Invoice.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This is the date and time the Invoice was approved (if applicable).</inlineHelpText>
+    <label>Approved Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>
