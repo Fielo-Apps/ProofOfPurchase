@@ -53,7 +53,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <gender>Masculine</gender>
     <label>Invoice Item</label>
     <nameField>
         <displayFormat>IT-{00000000}</displayFormat>
