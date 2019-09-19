@@ -318,7 +318,7 @@ public with sharing class FormController {
         }
   
         if(!record.getSobjectType().getDescribe().isCreateable() || !record.getSobjectType().getDescribe().isUpdateable())
-          throw new FieloException('Insufficient permission to create record.');
+          throw new FieloPLT.FieloException('Insufficient permission to create record.');
 
         upsert record;
         //TODO Crear Label DataSavedSuccessfully

@@ -214,7 +214,7 @@ public with sharing class Invoices extends SObjectDomain {
                 if (Schema.sObjectType.Invoice__c.isDeletable()) {
                     uow.commitWork();
                 } else {
-                    throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
+                    throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
                 }
                 InvoiceService.enableAdminPermission(false);
             }

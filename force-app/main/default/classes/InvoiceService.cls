@@ -29,7 +29,7 @@ global class InvoiceService {
             if (Schema.sObjectType.Invoice__c.isUpdateable()) {
                 uow.commitWork();
             } else {
-                throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
+                throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
             }
             return (List<Invoice__c>)uow.m_dirtyMapByType.get('FieloPRP__Invoice__c').values();
         }
@@ -61,7 +61,7 @@ global class InvoiceService {
             }
         }else{
             if(!Schema.sObjectType.Invoice__c.isUpdateable())
-                throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
+                throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
 
             uow.registerDirty(invoice);
             Set<Id> existingItems = new Set<Id>();
@@ -69,12 +69,12 @@ global class InvoiceService {
                 for(InvoiceItem__c item : invoiceItems){
                     if(item.Id == null){
                         if(!Schema.sObjectType.InvoiceItem__c.isCreateable())
-                            throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
+                            throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
 
                         uow.registerNew(item, InvoiceItem__c.Invoice__c, invoice);
                     }else{
                         if(!Schema.sObjectType.InvoiceItem__c.isUpdateable())
-                            throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
+                            throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
 
                         uow.registerDirty(item);
                         existingItems.add(item.Id);
@@ -82,7 +82,7 @@ global class InvoiceService {
                 }
             }
             if(!Schema.sObjectType.InvoiceItem__c.isCreateable())
-                throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
+                throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__InvoiceItem__c'}));
 
             uow.registerDeleted(new InvoiceItemsSelector().selectByInvoiceId(new Set<Id>{invoice.Id}, existingItems));
         }

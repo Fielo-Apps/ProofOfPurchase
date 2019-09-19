@@ -128,7 +128,7 @@ public with sharing class BackendHeaderRecordController {
           if(SecurityUtils.checkSObjectIsDeletable(sobjectType)){
             delete record;
           }else{
-            throw new FieloException(Label.CannotDeleteRecords);
+            throw new FieloPLT.FieloException(Label.CannotDeleteRecords);
           }
           // TODO cambiar label
           result.addMessage(new RemoteActionResult.RemoteActionMessage( ApexPages.Severity.Confirm, label.RecordDeletedSuccessfully) );
