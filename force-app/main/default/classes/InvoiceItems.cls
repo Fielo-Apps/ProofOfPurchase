@@ -171,7 +171,7 @@ public with sharing class InvoiceItems extends SObjectDomain {
                     if (Schema.sObjectType.Invoice__c.isUpdateable()) {
                         uow.commitWork();
                     } else {
-                        throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
+                        throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
                     }
 
                     if (!runningAsAdmin && !validateAdminFields) {
@@ -359,7 +359,7 @@ public with sharing class InvoiceItems extends SObjectDomain {
                     if (Schema.sObjectType.Invoice__c.isUpdateable()) {
                         uow.commitWork();
                     } else {
-                        throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
+                        throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
                     }
                     
                     if (!runningAsAdmin && !validateAdminFields) {
@@ -396,7 +396,7 @@ public with sharing class InvoiceItems extends SObjectDomain {
                 if (Schema.sObjectType.Invoice__c.isUpdateable()) {
                         uow.commitWork();
                 } else {
-                    throw new FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
+                    throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject,new List<String>{'FieloPRP__Invoice__c'}));
                 }
 
                 if (!runningAsAdmin && !validateAdminFields) {

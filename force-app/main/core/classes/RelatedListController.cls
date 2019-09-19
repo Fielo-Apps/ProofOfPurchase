@@ -157,7 +157,7 @@ public with sharing class RelatedListController {
           if(SecurityUtils.checkSObjectIsDeletable(recordId.getSobjectType())){
             delete record;
           }else{
-            throw new FieloException(Label.CannotDeleteRecords);
+            throw new FieloPLT.FieloException(Label.CannotDeleteRecords);
           }
           // TODO cambiar label
           result.addMessage(new RemoteActionResult.RemoteActionMessage( ApexPages.Severity.Confirm, label.RecordDeletedSuccessfully) );        

@@ -77,7 +77,7 @@ public with sharing class PhotoUploadController {
 
         if ( status == 'external' || status == 'existing' ) {
             if(!record.getSobjectType().getDescribe().isCreateable() || !record.getSobjectType().getDescribe().isUpdateable())
-                throw new FieloException('Insufficient permission to create record.');
+                throw new FieloPLT.FieloException('Insufficient permission to create record.');
 
             upsert record;
         } else {
@@ -128,7 +128,7 @@ public with sharing class PhotoUploadController {
             record.put( externalURLField, createURL(currentDocument));
             
             if(!record.getSobjectType().getDescribe().isCreateable() || !record.getSobjectType().getDescribe().isUpdateable())
-                throw new FieloException('Insufficient permission to create record.');
+                throw new FieloPLT.FieloException('Insufficient permission to create record.');
 
             upsert record;
         }
@@ -170,7 +170,7 @@ public with sharing class PhotoUploadController {
         record.put(externalURLField ,null);
         
         if(!record.getSobjectType().getDescribe().isCreateable() || !record.getSobjectType().getDescribe().isUpdateable())
-            throw new FieloException('Insufficient permission to create record.');
+            throw new FieloPLT.FieloException('Insufficient permission to create record.');
 
         upsert record;
         //TODO REVISAR SI BORRA DOCUMENTOS HUERFANOS
@@ -200,7 +200,7 @@ public with sharing class PhotoUploadController {
 
     public static String createURL(Document imageRecord){
         String url;
-        String instance = PublicSettings__c.getOrgDefaults().Instance__c;
+        String instance = FieloPLT__PublicSettings__c.getOrgDefaults().FieloPLT__Instance__c;
         if(instance != null && instance != ''){
             url = '//c.' + instance + '.content.force.com/servlet/servlet.ImageServer?id=' + (String)imageRecord.Id + '&oid=' + UserInfo.getOrganizationId() + '&LastModifiedDate=' + String.valueOf(imageRecord.get('LastModifiedDate'));
         }else{
