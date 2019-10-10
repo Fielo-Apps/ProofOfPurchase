@@ -17,6 +17,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FieloPLT__Program__c.RequestInvoiceDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>InvoiceItem__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
