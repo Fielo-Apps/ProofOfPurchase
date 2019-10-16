@@ -517,4 +517,46 @@ private class TestCreateInvoice {
         InvoiceService.testTempora2();
         InvoiceService.testTempora3();
     }
+
+    @isTest 
+    static void PRP_0002_FA7_2() {
+        //Given
+        programs = MockUpFactory.createPrograms('Default', 1);
+        insert programs;
+
+        members = MockUpFactory.createMembers(programs[0].Id,2);
+        insert members;
+
+        invoices = MockUpFactory.createInvoices(members[0].Id,1);
+        invoices.get(0).Date__c = null; 
+        
+        String errorMsg = '';
+        try{
+            insert invoices;
+        } catch(DmlException e) {
+            errorMsg = e.getDmlMessage(0);
+        }
+
+        System.assertEquals(Label.DateFieldNull, errorMsg, 'Wrong Error Msg');
+    }
+
+    @isTest 
+    static void PRP_0002_FA10() {
+        //Given
+        programs = MockUpFactory.createPrograms('Default', 1);
+        programs.get(0).RequestInvoiceDate__c = false;
+        insert programs;
+
+        members = MockUpFactory.createMembers(programs[0].Id,2);
+        insert members;
+
+        invoices = MockUpFactory.createInvoices(members[0].Id,1);
+        invoices.get(0).Date__c = null; 
+        
+        insert invoices;
+
+        invoices = [SELECT Id, Date__c FROM Invoice__c WHERE Id =: invoices.get(0).Id];
+
+        System.assertEquals(null, invoices.get(0).Date__c, 'Date Field Should be null');
+    }
 }
