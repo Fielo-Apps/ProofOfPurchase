@@ -31,6 +31,7 @@ private class RelatedListControllerTest {
     	controller.orderBy = 'FieloPRP__Member__r.Name';
     	controller.cRecordsPerPage = 10;
     	controller.cWhereClause = '';
+		controller.cAsync = false;
     	Integer records = controller.cRecordObjectsInPage;
     	String nameField = controller.nameFieldLabel;
     	List<Object> objects = controller.cRecordObjects;
