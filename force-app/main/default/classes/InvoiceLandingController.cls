@@ -40,7 +40,7 @@ public with sharing class InvoiceLandingController extends PageSettingsSetContro
 
         this.lookupSettings = new Map<String,FieloPLT__PageSettings__c>();
         
-        if (!lista.isEmpty()){
+        if (lista != null && !lista.isEmpty()){
             for(FieloPLT__PageSettings__c p :lista){
                 if(p.Name == 'Products > Lookup'){
                     lookupSettings.put('productSection', p);
