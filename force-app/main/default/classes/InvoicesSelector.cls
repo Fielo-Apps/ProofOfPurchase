@@ -50,7 +50,7 @@ public class InvoicesSelector extends SObjectSelector{
                     getOrderBy() } ));
 
             }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -74,7 +74,7 @@ public class InvoicesSelector extends SObjectSelector{
                     getOrderBy() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -102,7 +102,7 @@ public class InvoicesSelector extends SObjectSelector{
 
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -140,7 +140,7 @@ public class InvoicesSelector extends SObjectSelector{
                     getOffsetCondition() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -179,7 +179,7 @@ public class InvoicesSelector extends SObjectSelector{
                     getOffsetCondition() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -250,7 +250,7 @@ public class InvoicesSelector extends SObjectSelector{
 
 
          }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -284,7 +284,7 @@ public class InvoicesSelector extends SObjectSelector{
 
 
          }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -308,7 +308,7 @@ public class InvoicesSelector extends SObjectSelector{
                     getOrderBy() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -325,10 +325,9 @@ public class InvoicesSelector extends SObjectSelector{
         return (List<ProcessInstance>) Database.query(query);
 
         }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
-           return null;
     }
 
     public static List<ProcessInstance> selectAllInvoiceApprovalProcessInstance(Set<Id> invoiceIds){
@@ -341,10 +340,8 @@ public class InvoicesSelector extends SObjectSelector{
                 + ' FROM ProcessInstance WHERE TargetObjectId in :invoiceIds ORDER BY CreatedDate DESC';
         return (List<ProcessInstance>) Database.query(query);
         }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
-
-        return null;
     }
 
     public static List<ProcessInstance> selectLastInvoiceWorkingItem(Set<Id> invoiceIds){
@@ -358,7 +355,7 @@ public class InvoicesSelector extends SObjectSelector{
         listInvoice = (List<ProcessInstance>) Database.query(query);
 
          }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -377,7 +374,7 @@ public class InvoicesSelector extends SObjectSelector{
 
 
          }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;

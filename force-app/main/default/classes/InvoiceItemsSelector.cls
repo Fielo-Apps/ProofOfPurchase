@@ -45,7 +45,7 @@ public class InvoiceItemsSelector extends SObjectSelector{
                     getOrderBy() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -80,7 +80,7 @@ public class InvoiceItemsSelector extends SObjectSelector{
                     getOffsetCondition() } ));
 
                      }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;
@@ -107,7 +107,7 @@ public class InvoiceItemsSelector extends SObjectSelector{
                     getOffsetCondition() } ));
 
         }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
           }
 
           return listInvoice;

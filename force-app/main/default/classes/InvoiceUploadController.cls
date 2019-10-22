@@ -10,7 +10,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
 	@AuraEnabled
@@ -46,7 +45,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     @AuraEnabled
@@ -77,7 +75,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     @AuraEnabled
@@ -96,7 +93,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     // Copy File Save From fielocms-fieloprp
@@ -120,7 +116,7 @@ public with sharing class InvoiceUploadController {
         if (Schema.sObjectType.ContentVersion.isCreateable()) {
             insert cv;
         } else {
-            throw new FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
+            throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
         }
 
         ContentDocumentLink cdl = new ContentDocumentLink();
@@ -136,7 +132,7 @@ public with sharing class InvoiceUploadController {
         if (Schema.sObjectType.ContentDocumentLink.isCreateable()) {
             insert cdl;
         } else {
-            throw new FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentDocumentLink'}));
+            throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentDocumentLink'}));
         }
 
         return cv.Id;
@@ -159,7 +155,6 @@ public with sharing class InvoiceUploadController {
             Database.rollback( sp );
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     private static Id appendToFile(Id parentId, Id fileId, String base64Data) {
@@ -190,7 +185,7 @@ public with sharing class InvoiceUploadController {
             if (Schema.sObjectType.ContentVersion.isCreateable()) {
                 insert cv;
             } else {
-                throw new FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
+                throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
             }
 
             ContentDocumentLink cdl = new ContentDocumentLink();
@@ -206,12 +201,12 @@ public with sharing class InvoiceUploadController {
             if (Schema.sObjectType.ContentDocumentLink.isCreateable()) {
                 insert cdl;
             } else {
-                throw new FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentDocumentLink'}));
+                throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentDocumentLink'}));
             }
 
             return cv.Id;
         } else {
-            throw new FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
+            throw new FieloPLT.FieloException(String.format(Label.PermissionOnObject, new List<String>{'ContentVersion'}));
         }
     }
 }

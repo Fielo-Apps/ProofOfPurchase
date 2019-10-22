@@ -99,7 +99,7 @@ public with sharing class MyInvoicesController {
             if(Schema.sObjectType.FieloPLT__Member__c.isAccessible()){
                 members = [SELECT Id, FieloPLT__Program__r.Id, FieloPLT__Program__r.FieloPRP__ProductInjectQuery__c, FieloPLT__Program__r.FieloPRP__RequestInvoiceProducts__c FROM FieloPLT__Member__c WHERE Id = :memberId];
              }else{
-            throw new FieloException(Label.CannotAccessRecords);
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
             }
 
 

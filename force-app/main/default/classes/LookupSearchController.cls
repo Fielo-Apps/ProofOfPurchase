@@ -15,18 +15,10 @@ public  class LookupSearchController {
 				String.valueOf(offset)
 				}
 			);
-
-			System.debug(query);
-
-
-
- 		SObjectType convertType = Schema.getGlobalDescribe().get(sObjectName);
-
-        SecurityUtils.checkObjectIsReadable(convertType);
+			
+ 			SObjectType convertType = Schema.getGlobalDescribe().get(sObjectName);
+        	SecurityUtils.checkObjectIsReadable(convertType);
 			result = Database.query(query);
-
-
-
 
 			return result;
         } catch (DmlException e) {
@@ -34,6 +26,5 @@ public  class LookupSearchController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 }
