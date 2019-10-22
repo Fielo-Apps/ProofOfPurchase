@@ -26,6 +26,5 @@ public  class LookupSearchController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 }

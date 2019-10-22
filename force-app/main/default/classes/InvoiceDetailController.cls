@@ -6,7 +6,6 @@ public with sharing class InvoiceDetailController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     @AuraEnabled
@@ -18,6 +17,5 @@ public with sharing class InvoiceDetailController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 }

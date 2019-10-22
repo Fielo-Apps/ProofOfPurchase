@@ -10,7 +10,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
 	@AuraEnabled
@@ -44,7 +43,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     @AuraEnabled
@@ -75,7 +73,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     @AuraEnabled
@@ -94,7 +91,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     // Copy File Save From fielocms-fieloprp
@@ -157,7 +153,6 @@ public with sharing class InvoiceUploadController {
             Database.rollback( sp );
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     private static Id appendToFile(Id parentId, Id fileId, String base64Data) {

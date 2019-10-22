@@ -7,7 +7,6 @@ public class InvoiceItemsListViewController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
 	@AuraEnabled
@@ -58,6 +57,5 @@ public class InvoiceItemsListViewController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 }

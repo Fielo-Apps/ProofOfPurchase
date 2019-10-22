@@ -34,6 +34,5 @@ public class InvoiceItemsController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 }
