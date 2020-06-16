@@ -12,6 +12,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>FieloPLT__Program__c.RequestInvoiceDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>FieloPLT__Program__c.RequestInvoiceProducts__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -132,6 +137,6 @@
     </objectPermissions>
     <tabSettings>
         <tab>Invoice__c</tab>
-        <visibility>Available</visibility>
+        <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

@@ -10,7 +10,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
 	@AuraEnabled
@@ -38,13 +37,14 @@ public with sharing class InvoiceUploadController {
                 invoiceConfigurations.put('maxChunkSize', '950000');
             }
 
+            invoiceConfigurations.put('productObjectName', Schema.SObjectType.InvoiceItem__c.fields.getMap().get( invoiceConfigurations.get('productLookupField') ).getDescribe().getReferenceTo()[0].getDescribe().getName() );
+
             return invoiceConfigurations;
         } catch (DmlException e) {
             throw new AuraHandledException(e.getDmlMessage(0));
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     @AuraEnabled
@@ -75,7 +75,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     @AuraEnabled
@@ -94,7 +93,6 @@ public with sharing class InvoiceUploadController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
     
     // Copy File Save From fielocms-fieloprp
@@ -157,7 +155,6 @@ public with sharing class InvoiceUploadController {
             Database.rollback( sp );
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     private static Id appendToFile(Id parentId, Id fileId, String base64Data) {

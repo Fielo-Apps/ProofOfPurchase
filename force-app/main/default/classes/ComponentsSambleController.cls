@@ -8,6 +8,5 @@ public class ComponentsSambleController{
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 }

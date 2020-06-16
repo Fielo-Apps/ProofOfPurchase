@@ -141,16 +141,16 @@
             }
             var member = component.get('v.member');
             var fieldset = component.get('v.fieldset');
-            fieldset = helper.getFieldset(fieldset).fieldset;
-            var whereClause = component.get('v.whereClause');
+            fieldset = helper.getFieldset(fieldset);
+            var dynamicFilter = component.get('v.dynamicFilter');
             var quantity = component.get('v.quantity');
             var orderBy = component.get('v.orderBy');
-            if(member){            
+            if(member && fieldset && fieldset.length > 0){
                 var action = component.get('c.getInvoices');
                 var params = {};
                 params.fieldsInvoices = fieldset;
                 params.memberId = member.Id;
-                params.whereClause = whereClause ? whereClause : '';
+                params.dynamicFilter = dynamicFilter ? dynamicFilter : '';
                 params.quantity = (quantity ? quantity : 6) + 1;
                 params.offset = offset > 0 && offset != null ? offset : 0;
                 params.orderBy = orderBy;
@@ -193,16 +193,9 @@
         }
     },
     getFieldset : function(fieldset) {
-        var fields = {fieldset: ['Name'], subcomponents: []};
+        var fields = [];
         fieldset.forEach(function(field){
-            if(field.type != 'subcomponent'){
-                fields.fieldset.push(field.apiName);
-            } else {
-                fields.subcomponents.push(field);
-                if (fields.fieldset.indexOf(field.apiName)==-1) {
-                    fields.fieldset.push(field.apiName);
-                }
-            }           
+            fields.push(field.apiName);       
         })
         return fields;
     },

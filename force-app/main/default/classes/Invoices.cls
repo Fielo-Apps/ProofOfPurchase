@@ -31,12 +31,12 @@ public with sharing class Invoices extends SObjectDomain {
                     memberIds.add(invoice.Member__c);
             }
 
-            Map<Id,FieloPLT__Member__c> disabledUpdateMembers = new Map<Id, FieloPLT__Member__c>( new MembersSelector().selectByIdAndProgramWithDetailedInvoiceFalse(memberIds));
+            Map<Id,FieloPLT__Member__c> membersMap = new Map<Id, FieloPLT__Member__c>( new MembersSelector(new Set<String>{'FieloPLT__Program__r.RequestInvoiceProducts__c','FieloPLT__Program__r.RequestInvoiceDate__c'}).selectById(memberIds));
 
             for(Invoice__c invoice: (List<Invoice__c>)records){
                 if( invoice.Amount__c != null && invoice.Amount__c != 0.0 )
                     if(invoice.Member__c!=null)
-                        if( !disabledUpdateMembers.containsKey( invoice.Member__c ) ) {
+                        if( membersMap.get( invoice.Member__c ).FieloPLT__Program__r.RequestInvoiceProducts__c ) {
                             invoice.addError( Label.AmountUpdateDisabled );
                         } else {
                             if (invoice.Amount__c < 0.0) {
@@ -44,7 +44,7 @@ public with sharing class Invoices extends SObjectDomain {
                             }
                         }
                             
-                if( invoice.Date__c == null ) {
+                if( invoice.Date__c == null && membersMap.get(invoice.Member__c).FieloPLT__Program__r.RequestInvoiceDate__c) {
                     invoice.addError( Label.DateFieldNull );
                 } else if ( invoice.Date__c > System.today() ){
                     invoice.addError( Label.FutureDateField );
@@ -56,7 +56,13 @@ public with sharing class Invoices extends SObjectDomain {
 
     public override void onValidate( Map<Id,SObject> existingRecords ){
         if(validateAdminFields){
-            Map<Id,Invoice__c> disabledUpdateinvoices = new Map<Id, Invoice__c>( new InvoicesSelector().selectByItemIdWithDetailedInvoiceDisabled(new Map<Id,Invoice__c>((List<Invoice__c>)records).keyset()));
+            Set<Id> memberIds = new Set<Id>();
+            for(Invoice__c invoice: (List<Invoice__c>)records){
+                if(invoice.Member__c!=null)
+                    memberIds.add(invoice.Member__c);
+            }
+
+            Map<Id,FieloPLT__Member__c> membersMap = new Map<Id, FieloPLT__Member__c>( new MembersSelector(new Set<String>{'FieloPLT__Program__r.RequestInvoiceProducts__c','FieloPLT__Program__r.RequestInvoiceDate__c'}).selectById(memberIds));
 
             for(Invoice__c invoice: (List<Invoice__c>)records){
                 newAmount = invoice.Amount__c!=null ? invoice.Amount__c : 0.0;
@@ -73,7 +79,7 @@ public with sharing class Invoices extends SObjectDomain {
                 invoiceNumberHasChanged = newInvoiceNumber != oldInvoiceNumber;
 
                 if( newAmount.setScale(2) != oldAmount.setScale(2) )
-                    if( !disabledUpdateinvoices.containsKey( invoice.Id ) )
+                    if( membersMap.get(invoice.Member__c).FieloPLT__Program__r.RequestInvoiceProducts__c )
                         invoice.addError( Label.AmountUpdateDisabled );
 
                 if( invoice.HasDetails__c != ((Invoice__c)existingRecords.get(invoice.Id)).HasDetails__c )
@@ -84,7 +90,7 @@ public with sharing class Invoices extends SObjectDomain {
                         invoice.addError( Label.DraftNotEditable );
                 }
 
-                if( invoice.Date__c == null ) {
+                if( invoice.Date__c == null && membersMap.get(invoice.Member__c).FieloPLT__Program__r.RequestInvoiceDate__c) {
                     invoice.addError( Label.DateFieldNull );
                 } else if ( invoice.Date__c > System.today() ){
                     invoice.addError( Label.FutureDateField );
@@ -179,14 +185,14 @@ public with sharing class Invoices extends SObjectDomain {
             memberIds.add(invoice.Member__c);
         }
 
-        Map<Id,FieloPLT__Member__c> detailessInvoiceMembers = new Map<Id, FieloPLT__Member__c>( new MembersSelector().selectByIdAndProgramWithDetailedInvoiceFalse(memberIds));
+        Map<Id,FieloPLT__Member__c> membersMap = new Map<Id, FieloPLT__Member__c>( new MembersSelector(new Set<String>{'FieloPLT__Program__r.RequestInvoiceProducts__c','FieloPLT__Program__r.RequestInvoiceDate__c'}).selectById(memberIds));
 
         for(Invoice__c record : (List<Invoice__c>)records){
             if(record.Status__c == null){
                 record.Status__c = 'Open';
             }
 
-            record.HasDetails__c = !detailessInvoiceMembers.containsKey( record.Member__c );
+            record.HasDetails__c = membersMap.get( record.Member__c ).FieloPLT__Program__r.RequestInvoiceProducts__c;
         }
     }
 

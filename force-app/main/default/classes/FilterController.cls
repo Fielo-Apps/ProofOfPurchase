@@ -56,7 +56,6 @@ public with sharing class FilterController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 
 	public static Map<String, String> rangeLabel {get{

@@ -56,7 +56,6 @@ public class InvoiceFilterController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-        return null;
 	}
 
 	public static Map<String, String> rangeLabel {get{

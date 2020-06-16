@@ -5,6 +5,7 @@ public with sharing class MyInvoicesController {
             Map<String, DescribeFieldResult> fieldsDescribeMap = AuraService.getFieldsDescribe('FieloPRP__Invoice__c', fieldsInvoices);
             Set<String> fieldsInvoicesSet = new Set<String>(fieldsInvoices);
             fieldsInvoicesSet.add('Id');
+            fieldsInvoicesSet.add('Name');
             fieldsInvoicesSet.add('FieloPRP__HasDetails__c');
             fieldsInvoicesSet.add('FieloPRP__Comments__c');
             String fieldType;
@@ -57,7 +58,7 @@ public with sharing class MyInvoicesController {
             );
             for(SObject invoice: myInvoices) {
                 if (invoice.get('FieloPRP__InvoiceNumber__c') == null) {
-                    invoice.put('FieloPRP__InvoiceNumber__c', invoice.get('Name')) ;
+                    invoice.put('FieloPRP__InvoiceNumber__c', invoice.get('Name'));
                 }
                 for (Object fieldNameObject: invoice.getPopulatedFieldsAsMap().keySet()) {
                     String fieldName = String.valueOf(fieldNameObject);
@@ -93,7 +94,14 @@ public with sharing class MyInvoicesController {
     @AuraEnabled
     public static FieloPLT__Program__c getActiveProgram(String memberId) {
         try{
-            List<FieloPLT__Member__c> members = [SELECT Id, FieloPLT__Program__r.Id, FieloPLT__Program__r.FieloPRP__ProductInjectQuery__c, FieloPLT__Program__r.FieloPRP__RequestInvoiceProducts__c FROM FieloPLT__Member__c WHERE Id = :memberId];
+            List<FieloPLT__Member__c> members;
+
+            if(Schema.sObjectType.FieloPLT__Member__c.isAccessible()){
+                members = [SELECT Id, FieloPLT__Program__r.Id, FieloPLT__Program__r.FieloPRP__ProductInjectQuery__c, FieloPLT__Program__r.FieloPRP__RequestInvoiceProducts__c FROM FieloPLT__Member__c WHERE Id = :memberId];
+             }else{
+            throw new FieloPLT.FieloException(Label.CannotAccessRecords);
+            }
+
 
             if (!members.isEmpty()) {
                 FieloPLT__Program__c program = members[0].FieloPLT__Program__r;
