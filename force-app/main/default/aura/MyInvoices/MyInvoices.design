@@ -1,4 +1,4 @@
-<design:component label="FieloPRP - My Invoices">
+<design:component label="Fielo - My Invoices">
     
     <design:attribute label="Show Title" name="showHeader" description="When checked, the title will be shown at the top of the component." default="true" />
     
