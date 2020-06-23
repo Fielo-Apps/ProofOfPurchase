@@ -101,7 +101,7 @@
                   "value" : "Member submits proof of purchase"
                 }, {
                   "apiName" : "fieloplt__externalid__c",
-                  "value" : "InvoiceSubmitedFieloPRPMemberc"
+                  "value" : "00D460000013HOJ-a0046000005QZ4W"
                 }, {
                   "apiName" : "fieloplt__ruletrigger__c.fieloplt__externalid__c",
                   "value" : "Invoice",
