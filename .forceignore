@@ -13,4 +13,4 @@ package.xml
 *SessionSetting*
 *PasswordPolicy*
 
-unpackaged/
+**/unpackaged/

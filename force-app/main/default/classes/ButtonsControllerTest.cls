@@ -56,7 +56,7 @@ public with sharing class ButtonsControllerTest {
 		ButtonsController bc = new ButtonsController();
 		String ids=invoices[0].Id+','+invoices[1].Id+','+invoices[2].Id;
 
-		RemoteActionResult remoteAction = ButtonsController.executeAction(ids,'InvoiceButtonImpl','{"type":"Close"}');
+		FieloPLT.RemoteActionResult remoteAction = ButtonsController.executeAction(ids,'InvoiceButtonImpl','{"type":"Close"}');
 		bc.cParameters = '{"type":"Close"}';
 		bc.cRecordId = invoices[0].Id;
 		String parameters = bc.getParametersString();

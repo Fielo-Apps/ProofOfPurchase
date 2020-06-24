@@ -172,9 +172,9 @@ public class TestChangeInvoiceStatus {
 
         update invoices;
 
-        invoices[0] = [SELECT Id, Status__c,ApprovedDate__c FROM Invoice__c LIMIT 1];
+        invoices[0] = [SELECT Id, Status__c,ApprovedDate__c, (Select Id, Name, FieloPLT__IsReverted__c From Transactions__r) FROM Invoice__c LIMIT 1];
 
-        system.assertEquals(true,[Select Id, Name, FieloPLT__IsReverted__c From FieloPLT__Transaction__c WHERE Invoice__c =: invoices[0].Id ].FieloPLT__IsReverted__c);
+        system.assertEquals(true,invoices[0].Transactions__r[0].FieloPLT__IsReverted__c);
         system.assertEquals('Canceled',invoices[0].Status__c);
         system.assertEquals(null,invoices[0].ApprovedDate__c);
 

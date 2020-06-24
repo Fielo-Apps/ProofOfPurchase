@@ -136,7 +136,7 @@ public with sharing class InvoiceViewController extends PageSettingsController {
         images = [SELECT Id, Name FROM Attachment WHERE ParentId =: record.Id];
 
         
-        initPageSettings( 'FieloPRP__Invoice__c', (SObject) record, buttonString, '', '' );
+        initPageSettings( 'FieloPRP__Invoice__c', (SObject) record, buttonString, '', '', null );
         getLookupSetting('FieloPRP__Invoice__c',null,null);
         
     }

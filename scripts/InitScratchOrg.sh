@@ -1,5 +1,5 @@
 # Install FieloPLT
-sfdx force:package:install --package 04t2J000000MBdn
+sfdx force:package:install --package 04t2J000000MBmm
 
 # Push Source
 sfdx force:source:push

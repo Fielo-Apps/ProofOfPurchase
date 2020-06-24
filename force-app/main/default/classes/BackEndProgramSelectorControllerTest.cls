@@ -10,7 +10,7 @@ public class BackEndProgramSelectorControllerTest{
         System.assertEquals(program,bepsc.getActiveProgram());
         List<PicklistController.Entry> values = BackEndProgramSelectorController.programs;
         System.assert(!values.isEmpty());
-        System.assertEquals('000000000000000',bepsc.programsViewId);
+        System.assert(String.isNotBlank(String.valueOf(bepsc.programsViewId)));
         //System.assertEquals('Default',bepsc.programsViewId);
         RemoteActionResult result = BackEndProgramSelectorController.selectProgram(program.Id);
         List<RemoteActionResult.RemoteActionMessage> messages = result.getMessages();
