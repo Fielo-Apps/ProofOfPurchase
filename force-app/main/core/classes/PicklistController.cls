@@ -79,7 +79,11 @@ public with sharing class PicklistController {
 		if ( !String.isBlank(whereCondition) ) {
 			q += whereCondition.replace('/', '\'') + ' AND ';
 		}
-		q += idLabel + ' LIKE \'%'  + String.escapeSingleQuotes(searchTerm) + '%\' AND FieloPLT__Type__c != \'Team\' LIMIT 100';
+		q += idLabel + ' LIKE \'%'  + String.escapeSingleQuotes(searchTerm) + '%\' ';
+		if(sObjectName == 'FieloPLT__Member__c'){
+			q += 'AND FieloPLT__Type__c != \'Team\' ';
+		}
+		q += ' LIMIT 100';
 		List<sObject> records  = Database.query( q );
 
 		return records;
