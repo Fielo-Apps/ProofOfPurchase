@@ -16,11 +16,6 @@ public class TestChangeInvoiceStatus {
         members = MockUpFactory.createMembers(programs[0].Id,2);
         insert members;
 
-        //cannot insert member with points, member applydefaults ignores the points value upon insert
-        members[0].FieloPLT__Points__c = 100;
-        members[1].FieloPLT__Points__c = 100;
-        update members;
-
         invoices = MockUpFactory.createInvoices(members[0].Id,1);
         invoices[0].Status__c = 'Open';
         insert invoices;
@@ -30,7 +25,7 @@ public class TestChangeInvoiceStatus {
             Quantity__c = 10.0,
             TotalPrice__c = 70.0
         );
-        
+
         insert item;
 
         FieloPLT__Transaction__c transaccion = new FieloPLT__Transaction__c(
@@ -47,7 +42,7 @@ public class TestChangeInvoiceStatus {
 
     /*  TEST-1594
         Change Invoice Status
-        – Approve a Pending for Approval Invoice from a program where Request Invoice Authorization is TRUE and there is an ACTIVE Approval Process (OK)   
+        – Approve a Pending for Approval Invoice from a program where Request Invoice Authorization is TRUE and there is an ACTIVE Approval Process (OK)
     */
     @isTest static void PRP_0004_FA8(){
         programs = [SELECT Id FROM FieloPLT__Program__c];
@@ -126,7 +121,7 @@ public class TestChangeInvoiceStatus {
         update invoices;
 
         system.assertEquals('Rejected', ((Invoice__c)[SELECT Id, Status__c FROM Invoice__c]).Status__c);
-        
+
         invoices[0].Status__c = 'Open';
 
         update invoices;
@@ -271,14 +266,14 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Open';
 
         update invoices;
-        
+
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
     }
 
     /*  TEST-1601
-        Change Invoice Status 
+        Change Invoice Status
         – Validations
         – Close an open invoice from a program where Request Invoice Authorization is FALSE and there is an ACTIVE Approval Process (OK)
     */
@@ -300,7 +295,7 @@ public class TestChangeInvoiceStatus {
 
         update invoices;
 
-        system.assertEquals('Rejected',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);        
+        system.assertEquals('Rejected',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         invoices[0].Status__c = 'Open';
 
@@ -317,7 +312,7 @@ public class TestChangeInvoiceStatus {
         update invoices;
 
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, ApprovedDate__c FROM Invoice__c];
-        
+
         system.assertEquals('Approved',invoices[0].Status__c);
 
         system.assertEquals('Comment Test',invoices[0].Comments__c);
@@ -333,7 +328,7 @@ public class TestChangeInvoiceStatus {
         – Validations
         - Reject a Pending for Approval Invoice from a program where Request Invoice Authorization is FALSE and there is an ACTIVE Approval Process (OK)    */
     @isTest static void PRP_0004_FA11(){
-        
+
         programs = [SELECT Id FROM FieloPLT__Program__c];
 
         programs[0].FieloPRP__RequestInvoiceAuthorization__c = false;
@@ -394,7 +389,7 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Open';
 
         update invoices;
-                
+
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -427,7 +422,7 @@ public class TestChangeInvoiceStatus {
             update invoices;
         }
         catch(Exception e){}
-                
+
         system.assertEquals('Canceled',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -459,7 +454,7 @@ public class TestChangeInvoiceStatus {
             InvoiceService.submitForApproval(new Set<Id>{invoices[0].Id});
         }
         catch(Exception e){}
-                
+
         system.assertEquals('Canceled',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -483,7 +478,7 @@ public class TestChangeInvoiceStatus {
             update invoices;
         }
         catch(Exception e){}
-                
+
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -508,20 +503,20 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Open';
 
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
-        
+
         invoices[0].Comments__c = 'Commenting Test';
-        
+
         invoices[0].Status__c = 'Approved';
 
         Date dt = (System.now()).date();
-                
+
         update invoices;
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, ApprovedDate__c FROM Invoice__c LIMIT 1];
 
         system.assertEquals('Approved',invoices[0].Status__c);
 
         system.assertEquals('Commenting Test',invoices[0].Comments__c);
-        
+
         system.assertEquals(dt,(invoices[0].ApprovedDate__c).date());
         Test.stopTest();
     }
@@ -550,7 +545,7 @@ public class TestChangeInvoiceStatus {
             InvoiceService.submitForApproval(new Set<Id>{invoices[0].Id});
         }
         catch(Exception e){}
-                
+
         system.assertEquals('Approved',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -581,7 +576,7 @@ public class TestChangeInvoiceStatus {
             update invoices;
         }
         catch(Exception e){}
-                
+
         system.assertEquals('Approved',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         Test.stopTest();
@@ -616,8 +611,8 @@ public class TestChangeInvoiceStatus {
 
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, ApprovedDate__c FROM Invoice__c];
 
-        system.assertEquals('Approved',invoices[0].Status__c);        
-                
+        system.assertEquals('Approved',invoices[0].Status__c);
+
         system.assertEquals('Approved Test',invoices[0].Comments__c);
 
         system.assertEquals(dt,(invoices[0].ApprovedDate__c).date());
@@ -650,7 +645,7 @@ public class TestChangeInvoiceStatus {
     /*  TEST-1635
         Change Invoice Status
         – Close an open invoice from a program where Request Invoice Authorization is TRUE and there is NO active Approval Process (OK)    */
-    
+
     @isTest static void PRP_0004_FA5(){
         programs = [SELECT Id FROM FieloPLT__Program__c];
 
@@ -663,7 +658,7 @@ public class TestChangeInvoiceStatus {
         Test.startTest();
 
         InvoiceService.updateInvoiceStatus(new Set<Id>{invoices[0].Id}, 'Open');
-        
+
         system.assertEquals('Open',[SELECT Id, Status__c From Invoice__c LIMIT 1].Status__c);
 
         InvoiceService.updateInvoiceStatus(new Set<Id>{invoices[0].Id}, 'Pending for Approval');
@@ -783,13 +778,13 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Approved';
         invoices[0].Comments__c = 'Approved Test';
         Date dt = (System.now()).date();
-        
+
         update invoices;
 
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, ApprovedDate__c FROM Invoice__c LIMIT 1];
 
         system.assertEquals('Approved',invoices[0].Status__c);
-    
+
         system.assertEquals('Approved Test',invoices[0].Comments__c);
         system.assertEquals(dt,(invoices[0].ApprovedDate__c).date());
     }
@@ -869,13 +864,13 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Rejected';
         invoices[0].Comments__c = 'Rejected Test';
         invoices[0].RejectReason__c = 'Invalid Image';
-        
+
         update invoices;
 
         system.assertEquals('Rejected',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
-        
+
         system.assertEquals('Rejected Test',[SELECT Id, Comments__c FROM Invoice__c LIMIT 1].Comments__c);
-        
+
         system.assertEquals('Invalid Image',[SELECT Id, RejectReason__c FROM Invoice__c LIMIT 1].RejectReason__c);
     }
 
@@ -971,7 +966,7 @@ public class TestChangeInvoiceStatus {
 
         try{
             update invoices;
-        } 
+        }
         catch (Exception e) {}
 
         system.assertEquals('Rejected',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
@@ -1006,16 +1001,16 @@ public class TestChangeInvoiceStatus {
 
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, RejectReason__c, ApprovedDate__c FROM Invoice__c];
         system.assertEquals('Canceled',invoices[0].Status__c);
-        
+
         system.assertEquals(null,invoices[0].Comments__c);
-        
+
         system.assertEquals(null,invoices[0].RejectReason__c);
 
         system.assertEquals(null,invoices[0].ApprovedDate__c);
 
     }
 
-    
+
     /*  TEST-1657
         Change Invoice Status
         – Validations
@@ -1104,7 +1099,7 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Open';
 
         update invoices;
-        
+
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
     }
 
@@ -1134,13 +1129,13 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Canceled';
 
         update invoices;
-        
+
         system.assertEquals('Canceled',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         invoices[0].Status__c = 'Open';
 
         update invoices;
-        
+
         system.assertEquals('Open',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         system.assertEquals(null, [SELECT Id, Comments__c FROM Invoice__c LIMIT 1].Comments__c);
@@ -1174,7 +1169,7 @@ public class TestChangeInvoiceStatus {
         invoices[0].Status__c = 'Canceled';
 
         update invoices;
-        
+
         system.assertEquals('Canceled',[SELECT Id, Status__c FROM Invoice__c LIMIT 1].Status__c);
 
         invoices[0].Status__c = 'Approved';
@@ -1182,7 +1177,7 @@ public class TestChangeInvoiceStatus {
 
         update invoices;
         invoices[0] = (Invoice__c)[SELECT Id, Status__c, Comments__c, ApprovedDate__c FROM Invoice__c LIMIT 1];
-        
+
         system.assertEquals('Approved',invoices[0].Status__c);
         system.assertEquals(dt,(invoices[0].ApprovedDate__c).date());
 
