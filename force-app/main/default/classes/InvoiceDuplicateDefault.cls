@@ -1,5 +1,5 @@
 public class InvoiceDuplicateDefault implements InvoiceDuplicateInterface{
-	
+
 	public void setUniqueKey(List<Invoice__c> invoices, Boolean isUpdate){
 		Set<Id> memberIds = new Set<Id>();
 		for(Invoice__c invoice : invoices){
@@ -29,7 +29,7 @@ public class InvoiceDuplicateDefault implements InvoiceDuplicateInterface{
 		Map<String,Invoice__c> keyInvoicesMap = new Map<String,Invoice__c>();
 		for(Invoice__c invoice : invoices){
 			if(String.isNotBlank(invoice.UniqueKeyField__c)){
-				if(!isUpdate || (invoice.Distributor__c != ((Invoice__c)Trigger.oldMap.get(invoice.Id)).Distributor__c || invoice.Status__c != ((Invoice__c)Trigger.oldMap.get(invoice.Id)).Status__c)){
+				if(!isUpdate || (invoice.Distributor__c != ((Invoice__c)Trigger.oldMap.get(invoice.Id)).Distributor__c || invoice.Status__c != ((Invoice__c)Trigger.oldMap.get(invoice.Id)).Status__c || invoice.InvoiceNumber__c != ((Invoice__c)Trigger.oldMap.get(invoice.Id)).InvoiceNumber__c)){
 					keyInvoicesMap.put(invoice.UniqueKeyField__c, invoice);
 				}
 			}
@@ -37,7 +37,7 @@ public class InvoiceDuplicateDefault implements InvoiceDuplicateInterface{
 
 		if(!keyInvoicesMap.isEmpty()){
 			Set<String> existingKeys = new Set<String>();
-			for(Invoice__c invoice : [SELECT UniqueKeyField__c FROM Invoice__c WHERE Status__c = 'Approved' AND UniqueKeyField__c in : keyInvoicesMap.keySet() AND Id not in : invoices]){
+			for(Invoice__c invoice : [SELECT UniqueKeyField__c FROM Invoice__c WHERE (Status__c = 'Approved' OR Status__c = 'Pending for Approval') AND UniqueKeyField__c in : keyInvoicesMap.keySet() AND Id not in : invoices]){
 				existingKeys.add(invoice.UniqueKeyField__c);
 			}
 
